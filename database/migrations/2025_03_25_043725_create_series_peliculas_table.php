@@ -11,21 +11,23 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('usuarios', function (Blueprint $table) {
+        Schema::create('series_peliculas', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre');
-            $table->string('email')->unique();
-            $table->string('password');
-            $table->timestamp('fecha_registro')->useCurrent();
+            $table->string('titulo');
+            $table->integer('anio')->nullable();
+            $table->enum('tipo', ['Serie', 'Pelicula']);
+            $table->string('director')->nullable();
+            $table->text('sinopsis')->nullable();
             $table->timestamps();
         });
     }
-
+    
     /**
+    
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('usuarios');
+        Schema::dropIfExists('series_peliculas');
     }
 };

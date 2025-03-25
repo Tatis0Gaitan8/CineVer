@@ -11,13 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('usuarios', function (Blueprint $table) {
+        Schema::create('episodios', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre');
-            $table->string('email')->unique();
-            $table->string('password');
-            $table->timestamp('fecha_registro')->useCurrent();
+            $table->unsignedBigInteger('serie_id');
+            $table->integer('temporada');
+            $table->integer('numero_episodio');
+            $table->string('titulo');
             $table->timestamps();
+
+            $table->foreign('serie_id')->references('id')->on('peliculas_series')->onDelete('cascade');
         });
     }
 
@@ -26,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('usuarios');
+        Schema::dropIfExists('episodios');
     }
 };
