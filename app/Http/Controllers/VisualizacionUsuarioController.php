@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\pelicula_serie_categoria;
+use App\Models\visualizacion_usuario;
 use Illuminate\Http\Request;
 
-class PeliculaSerieCategoriaController
+class VisualizacionUsuarioController
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +34,7 @@ class PeliculaSerieCategoriaController
     /**
      * Display the specified resource.
      */
-    public function show(pelicula_serie_categoria $pelicula_serie_categoria)
+    public function show(visualizacion_usuario $visualizacion_usuario)
     {
         //
     }
@@ -42,7 +42,7 @@ class PeliculaSerieCategoriaController
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(pelicula_serie_categoria $pelicula_serie_categoria)
+    public function edit(visualizacion_usuario $visualizacion_usuario)
     {
         //
     }
@@ -50,7 +50,7 @@ class PeliculaSerieCategoriaController
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, pelicula_serie_categoria $pelicula_serie_categoria)
+    public function update(Request $request, visualizacion_usuario $visualizacion_usuario)
     {
         //
     }
@@ -58,7 +58,7 @@ class PeliculaSerieCategoriaController
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(pelicula_serie_categoria $pelicula_serie_categoria)
+    public function destroy(visualizacion_usuario $visualizacion_usuario)
     {
         //
     }

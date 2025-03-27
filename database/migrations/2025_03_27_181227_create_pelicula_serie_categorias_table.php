@@ -15,10 +15,12 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('pelicula_serie_id');
             $table->unsignedBigInteger('categoria_id');
+            $table->unsignedBigInteger('nombre');
+            $table->unsignedBigInteger('Tipo');
             $table->timestamps();
 
-            $table->foreign('pelicula_serie_id')->references('id')->on('peliculas_series')->onDelete('cascade');
-            $table->foreign('categoria_id')->references('id')->on('categorias')->onDelete('cascade');
+            $table->foreign('Series_peliculas_id')->references('id')->on('Series_peliculas')->onDelete('cascade');
+            $table->foreign('categorias_id')->references('id')->on('categorias')->onDelete('cascade');
         });
     }
 
@@ -30,3 +32,6 @@ return new class extends Migration
         Schema::dropIfExists('pelicula_serie_categorias');
     }
 };
+
+
+

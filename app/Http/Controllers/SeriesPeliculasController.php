@@ -4,17 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\series_peliculas;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 
-class SeriesPeliculasController extends Controller
+class SeriesPeliculasController
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $peliculasSeries = Series_Peliculas::all();
-        return response()->json($peliculasSeries);
+        $series_peliculas = series_peliculas::all();
+        return response()->json($series_peliculas);
     }
 
     /**
@@ -22,40 +21,44 @@ class SeriesPeliculasController extends Controller
      */
     public function create()
     {
-        //
+        return view('series_peliculas.create'); // Asegúrate de que esta vista exista
     }
 
     /**
      * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
      */
+
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'titulo' => 'required|string|max:255',
-            'anio' => 'nullable|integer',
+        $request->validate([
+            'titulo' => 'required',
+            'anio' => 'required|integer',
             'tipo' => 'required|in:Serie,Pelicula',
-            'director' => 'nullable|string|max:255',
-            'sinopsis' => 'nullable|string',
         ]);
 
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
-
         $peliculaSerie = series_peliculas::create($request->all());
-        return response()->json($peliculaSerie, 201);
+        $peliculaSerie->categorias()->attach($request->categorias);
+
+        return redirect()->route('peliculas_series.index');
     }
+        
+    
 
     /**
      * Display the specified resource.
      */
     public function show($id)
     {
-        $peliculaSerie = series_peliculas::find($id);
-        if (!$peliculaSerie) {
-            return response()->json(['message' => 'Película/Serie no encontrada'], 404);
+        {
+            $peliculaSerie = series_peliculas::find($id);
+            if (!$peliculaSerie) {
+                return response()->json(['message' => 'Película/Serie no encontrada'], 404);
+            }
+            return response()->json($peliculaSerie);
         }
-        return response()->json($peliculaSerie);
     }
 
     /**
@@ -69,25 +72,12 @@ class SeriesPeliculasController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(Request $request,$id)
     {
         $peliculaSerie = series_peliculas::find($id);
         if (!$peliculaSerie) {
             return response()->json(['message' => 'Película/Serie no encontrada'], 404);
         }
-
-        $validator = Validator::make($request->all(), [
-            'titulo' => 'string|max:255',
-            'anio' => 'nullable|integer',
-            'tipo' => 'in:Serie,Pelicula',
-            'director' => 'nullable|string|max:255',
-            'sinopsis' => 'nullable|string',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
-
         $peliculaSerie->update($request->all());
         return response()->json($peliculaSerie);
     }
